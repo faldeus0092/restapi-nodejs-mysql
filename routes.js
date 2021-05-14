@@ -12,4 +12,13 @@ module.exports = function(app){
 
     app.route('/showByID/:id')
         .get(myJson.showByID);
-}
+
+    app.route('/addNewEmp')
+        .post(myJson.addNewEmp);
+
+    app.route('/updateEmp')
+        .put(myJson.updateEmp);
+
+    app.route('/deleteEmp')
+        .delete(myJson.deleteEmp);
+    }
