@@ -21,4 +21,7 @@ module.exports = function(app){
 
     app.route('/deleteEmp')
         .delete(myJson.deleteEmp);
+
+    app.route('/showEmployed')
+        .get(myJson.showEmployed);
     }

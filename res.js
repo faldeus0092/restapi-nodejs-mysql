@@ -10,3 +10,29 @@ exports.ok = function(values, res){
     res.json(data);
     res.end();
 }
+
+// nested response
+exports.oknested = function (values, res){
+    const result = values.reduce((akumulasikan, item)=>{
+        if (akumulasikan(item.name)){
+            const group = akumulasikan(item.name);
+            if(Array.isArray(group.dept_name)){
+                group.dept_name.push(item.dept_name)
+            }
+            else {
+                group.dept_name = [group.dept_name, item.dept_name];
+            }
+        }else {
+            akumulasikan[item.name] = item
+        }
+        return akumulasikan;
+    }, {})
+
+    var data = {
+        'status' : 200,
+        'values' : result
+    };
+
+    res.json(data);
+    res.end();
+}
