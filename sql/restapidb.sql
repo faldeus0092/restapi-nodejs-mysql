@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2021 at 04:51 PM
+-- Generation Time: May 18, 2021 at 09:07 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -57,52 +57,59 @@ INSERT INTO `departments` (`dept_id`, `dept_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dept_emp`
+-- Table structure for table `designation`
 --
 
-CREATE TABLE `dept_emp` (
-  `emp_id` int(11) NOT NULL,
-  `dept_id` int(11) NOT NULL,
-  `from_date` date NOT NULL,
-  `to_date` date NOT NULL
+CREATE TABLE `designation` (
+  `designation_id` int(11) NOT NULL,
+  `designation_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `dept_emp`
+-- Dumping data for table `designation`
 --
 
-INSERT INTO `dept_emp` (`emp_id`, `dept_id`, `from_date`, `to_date`) VALUES
-(24, 3, '2020-06-01', '2022-07-01'),
-(22, 8, '2019-04-09', '2021-12-15'),
-(1, 1, '2018-06-12', '2022-05-19'),
-(7, 7, '2020-12-16', '2022-12-20'),
-(14, 16, '2021-05-02', '2023-03-14'),
-(21, 3, '2020-02-11', '2022-04-13'),
-(18, 8, '2017-08-07', '2021-09-08'),
-(15, 13, '2019-09-15', '2023-09-21'),
-(24, 14, '2020-11-09', '2021-10-09'),
-(22, 15, '2020-03-09', '2022-08-17');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `dept_manager`
---
-
-CREATE TABLE `dept_manager` (
-  `dept_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
-  `from_date` date NOT NULL,
-  `to_date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `dept_manager`
---
-
-INSERT INTO `dept_manager` (`dept_id`, `emp_id`, `from_date`, `to_date`) VALUES
-(1, 21, '2021-01-05', '2022-05-27'),
-(8, 1, '2020-09-21', '2022-05-20');
+INSERT INTO `designation` (`designation_id`, `designation_name`) VALUES
+(1, 'Administrative Senior'),
+(2, 'Product Analyst'),
+(3, 'Technical Animator'),
+(4, 'Senior VFX Artist'),
+(5, 'Animator'),
+(6, 'Cinematic Animator'),
+(7, 'Lead UI/UX Designer'),
+(8, 'Senior Concept Artist'),
+(9, 'VFX Artist'),
+(10, 'Environment Artist'),
+(11, 'Matte Painter - Environment Artist'),
+(12, 'Senior Sound Designer'),
+(13, 'Technical Sound Designer'),
+(14, 'Product Manager'),
+(15, 'Lead Development General'),
+(16, 'Senior Technical Game Designer'),
+(17, 'Senior Combat Designer'),
+(18, 'Live Ops Technical Designer'),
+(19, 'Technical Hardware Management'),
+(20, 'Social Media Manager'),
+(21, 'Lead Operations'),
+(22, 'Lead Producer'),
+(23, 'Technical Producer'),
+(24, 'Associate Producer'),
+(25, 'Software Engineer - C++'),
+(26, 'Senior Software Engineer - C++'),
+(27, 'Quality Designer'),
+(28, 'Development Manager'),
+(29, 'Live Development Director'),
+(30, 'Development Tester'),
+(31, 'Game Security Analyst'),
+(32, 'Senior Platform Integrations - C++'),
+(33, 'Senior Animation Software Engineer - C++'),
+(34, 'AI Software Engineer - C++'),
+(35, 'System Engineer - C++'),
+(36, 'Senior Recruiter'),
+(37, 'Senior Sourcing Partner'),
+(38, 'Lead User Research'),
+(39, 'Senior Live Services Software Engineer - C++'),
+(40, 'Network Software Engineer - C++');
 
 -- --------------------------------------------------------
 
@@ -114,38 +121,30 @@ CREATE TABLE `employee` (
   `emp_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `gender` varchar(1) DEFAULT NULL,
-  `hire_date` date NOT NULL
+  `dept_id` int(11) DEFAULT NULL,
+  `designation_id` int(11) DEFAULT NULL,
+  `hire_date` date NOT NULL,
+  `salary_id` int(11) DEFAULT NULL,
+  `cc_number` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`emp_id`, `name`, `gender`, `hire_date`) VALUES
-(1, 'Aran Mikazuki', 'm', '2020-11-24'),
-(2, 'Prof. Jettie Russel Jr.', 'f', '2020-10-23'),
-(3, 'Dena Watsica', 'f', '2020-11-21'),
-(4, 'Hugh Kiehn DDS', 'm', '2020-01-14'),
-(5, 'Eli Block', 'm', '2020-07-06'),
-(6, 'Dr. Fredrick Reinger Jr.', 'm', '2020-03-14'),
-(7, 'Mr. Agustin Morar DVM', 'f', '2020-04-09'),
-(8, 'Dimitri Christiansen', 'f', '2021-01-29'),
-(9, 'Tyrel Schumm', 'm', '2020-06-08'),
-(10, 'Mrs. Oma Rippin Jr.', 'f', '2019-10-09'),
-(11, 'Arielle Price', 'f', '2021-04-29'),
-(12, 'Prof. Lia Rippin', 'f', '2021-04-04'),
-(13, 'Rose Lesch', 'm', '2019-05-12'),
-(14, 'Serena Casper', 'm', '2020-10-25'),
-(15, 'Prof. Dwight Quitzon', 'm', '2020-10-20'),
-(16, 'Isabell Klocko', 'f', '2020-01-24'),
-(17, 'Dr. Loyce Nader I', 'm', '2021-01-30'),
-(18, 'Kayden Ebert', 'm', '2020-04-23'),
-(19, 'Kaci Morissette', 'f', '2021-04-28'),
-(20, 'Jude VonRueden', 'f', '2019-09-12'),
-(21, 'Pepe Gas', 'm', '2021-05-02'),
-(22, 'Jack Marston', 'm', '2019-02-02'),
-(23, 'Rip Van Winkle', 'm', '2019-10-10'),
-(24, 'Amane Kanata', 'f', '2019-10-10');
+INSERT INTO `employee` (`emp_id`, `name`, `gender`, `dept_id`, `designation_id`, `hire_date`, `salary_id`, `cc_number`) VALUES
+(1, 'Pepegas', 'm', 1, 1, '2018-08-15', 7, '44992039128'),
+(2, 'Rick Dias', 'm', 3, 4, '2020-06-18', 14, '4364897752818'),
+(3, 'Yuagg Gogg', 'm', 3, 8, '2020-09-21', 16, '4946543621940'),
+(4, 'Yuri Katoki', 'f', 12, 27, '2019-10-14', 17, '374052739556057'),
+(5, 'Geara Doga', 'm', 14, 40, '2020-10-20', 10, '5226125373692856'),
+(6, 'Char Aznable', 'm', 16, 38, '2019-11-20', 9, '6011085425823536'),
+(7, 'Sayla Mass', 'f', 9, 20, '2019-07-08', 15, '5146924920028441'),
+(8, 'Helmi Fachry Adamy', 'm', 14, 34, '2021-05-18', 11, '4051423629897'),
+(9, 'Ramdani Lucko', 'm', 4, 12, '2021-01-12', 13, '5459244334921706'),
+(10, 'Akari Shinohara', 'f', 13, 31, '2020-04-13', 8, '4560641337083'),
+(11, 'Zoltan Akkanen', 'm', 15, 36, '2020-12-14', 18, '352979400425699'),
+(12, 'Minerva Lao Zabi', 'm', 1, 1, '2018-03-12', 12, '5168949848572959');
 
 -- --------------------------------------------------------
 
@@ -154,7 +153,8 @@ INSERT INTO `employee` (`emp_id`, `name`, `gender`, `hire_date`) VALUES
 --
 
 CREATE TABLE `salaries` (
-  `emp_id` int(11) NOT NULL,
+  `salary_id` int(11) NOT NULL,
+  `emp_id` int(11) DEFAULT NULL,
   `salary` int(11) NOT NULL,
   `from_date` date NOT NULL,
   `to_date` date NOT NULL
@@ -164,12 +164,19 @@ CREATE TABLE `salaries` (
 -- Dumping data for table `salaries`
 --
 
-INSERT INTO `salaries` (`emp_id`, `salary`, `from_date`, `to_date`) VALUES
-(24, 1250, '2020-06-30', '2021-05-01'),
-(22, 4000, '2020-04-13', '2022-04-13'),
-(1, 2000, '2019-11-14', '2021-05-20'),
-(1, 4000, '2021-05-21', '2022-05-19'),
-(7, 1450, '2020-12-16', '2021-11-19');
+INSERT INTO `salaries` (`salary_id`, `emp_id`, `salary`, `from_date`, `to_date`) VALUES
+(7, 1, 1250, '2021-02-16', '2021-10-08'),
+(8, 10, 4000, '2020-04-13', '2022-03-11'),
+(9, 6, 3200, '2019-11-20', '2022-04-13'),
+(10, 5, 4500, '2020-10-20', '2022-10-20'),
+(11, 8, 9000, '2021-05-08', '2023-05-08'),
+(12, 12, 3000, '2018-03-12', '2023-03-12'),
+(13, 9, 7900, '2021-01-12', '2023-01-12'),
+(14, 2, 12450, '2020-06-18', '2023-06-18'),
+(15, 7, 4550, '2019-07-08', '2024-07-08'),
+(16, 3, 8760, '2020-09-21', '2021-09-21'),
+(17, 4, 2450, '2019-10-14', '2023-10-14'),
+(18, 11, 9000, '2020-12-14', '2023-12-14');
 
 --
 -- Indexes for dumped tables
@@ -182,29 +189,25 @@ ALTER TABLE `departments`
   ADD PRIMARY KEY (`dept_id`);
 
 --
--- Indexes for table `dept_emp`
+-- Indexes for table `designation`
 --
-ALTER TABLE `dept_emp`
-  ADD KEY `emp_id` (`emp_id`),
-  ADD KEY `dept_id` (`dept_id`);
-
---
--- Indexes for table `dept_manager`
---
-ALTER TABLE `dept_manager`
-  ADD KEY `dept_id` (`dept_id`),
-  ADD KEY `emp_id` (`emp_id`);
+ALTER TABLE `designation`
+  ADD PRIMARY KEY (`designation_id`);
 
 --
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
-  ADD PRIMARY KEY (`emp_id`);
+  ADD PRIMARY KEY (`emp_id`),
+  ADD KEY `employee_ibfk_1` (`dept_id`),
+  ADD KEY `employee_ibfk_2` (`designation_id`),
+  ADD KEY `employee_ibfk_3` (`salary_id`);
 
 --
 -- Indexes for table `salaries`
 --
 ALTER TABLE `salaries`
+  ADD PRIMARY KEY (`salary_id`),
   ADD KEY `emp_id` (`emp_id`);
 
 --
@@ -218,28 +221,34 @@ ALTER TABLE `departments`
   MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT for table `designation`
+--
+ALTER TABLE `designation`
+  MODIFY `designation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `emp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `salaries`
+--
+ALTER TABLE `salaries`
+  MODIFY `salary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `dept_emp`
+-- Constraints for table `employee`
 --
-ALTER TABLE `dept_emp`
-  ADD CONSTRAINT `dept_emp_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `dept_emp_ibfk_2` FOREIGN KEY (`dept_id`) REFERENCES `departments` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `dept_manager`
---
-ALTER TABLE `dept_manager`
-  ADD CONSTRAINT `dept_manager_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `departments` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `dept_manager_ibfk_2` FOREIGN KEY (`emp_id`) REFERENCES `employee` (`emp_id`);
+ALTER TABLE `employee`
+  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`dept_id`) REFERENCES `departments` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_2` FOREIGN KEY (`designation_id`) REFERENCES `designation` (`designation_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `employee_ibfk_3` FOREIGN KEY (`salary_id`) REFERENCES `salaries` (`salary_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `salaries`
