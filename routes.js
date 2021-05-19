@@ -25,6 +25,15 @@ module.exports = function(app){
     app.route('/deleteEmp')
         .delete(myJson.deleteEmp);
     // show employee salaries history
-    // app.route('/salariesHistory/:id')
-    //     .get(myJson.salariesHistory);
+    app.route('/showSalaries')
+        .get(myJson.showSalaries);
+    app.route('/showSalariesByID/:id')
+        .get(myJson.showSalariesByID);
+
+    // edit salaries
+    app.route('/updateSalaries')
+        .put(myJson.updateSalaries);
+    // add new salaries
+    app.route('/addNewSalaries')
+        .post(myJson.addNewSalaries);
     }
