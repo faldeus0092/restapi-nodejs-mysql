@@ -54,6 +54,31 @@ exports.showByID = function (req, res) {
         });
 };
 
+// show based on ID
+exports.showByDeptID = function (req, res) {
+    let id = req.params.id;
+    connection.query(`SELECT employee.emp_id, employee.name, employee.gender, employee.hire_date, departments.dept_name, designation.designation_name, salaries.salary, employee.cc_number FROM employee
+    JOIN departments
+    JOIN designation
+    JOIN salaries
+    WHERE employee.dept_id = departments.dept_id
+    AND employee.designation_id = designation.designation_id
+    AND employee.emp_id = salaries.emp_id
+    AND salaries.from_date < CURRENT_DATE 
+    AND CURRENT_DATE < salaries.to_date
+    AND employee.dept_id = ?`, [id],
+        function (error, rows, fields) {
+            if (error) {
+                console.log(error);
+            } else if (rows.length > 0){
+                response.ok(rows, res);
+            } 
+            else {
+                response.no(rows, res);
+            }
+        });
+};
+
 // for putting new data
 exports.addNewEmp = function (req, res) {
     var name = req.body.name;

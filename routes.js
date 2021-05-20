@@ -13,8 +13,8 @@ module.exports = function(app){
     app.route('/showByID/:id')
         .get(myJson.showByID);
     // show employee data based on department ID
-    // app.route('/showByDeptID/:id')
-    //     .get(myJson.showByDeptID);
+    app.route('/showByDeptID/:id')
+        .get(myJson.showByDeptID);
     // add new employee
     app.route('/addNewEmp')
         .post(myJson.addNewEmp);
