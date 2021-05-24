@@ -3,7 +3,7 @@ const config = require('../config/secret');
 var mysql = require('mysql');
 var conn = require('../conn');
 
-function verification(roles) {
+function verificationAdmin(roles) {
     return function (req, rest, next) {
         // var role = req.body.role;
         // check authorization dari header
@@ -26,7 +26,7 @@ function verification(roles) {
                                     message: "Token invalid."
                                 });
                             } else {
-                                if (role == 1 || role == 2) {
+                                if (role == 2) {
                                     req.auth = rows;
                                     next();
                                 } else {
@@ -54,4 +54,4 @@ function verification(roles) {
     }
 }
 
-module.exports = verification;
+module.exports = verificationAdmin;

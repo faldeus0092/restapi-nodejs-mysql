@@ -8,8 +8,8 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 // routes
-var routes = require('./routes');
-routes(app);
+// var routes = require('./routes');
+// routes(app);
 
 // register routes menu from index.js
 app.use('/auth', require('./middleware'));

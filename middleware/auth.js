@@ -12,7 +12,6 @@ exports.register = function (req,res) {
         username: req.body.username,
         email: req.body.email,
         password: md5(req.body.password),
-        role: req.body.role,
         reg_date: new Date()
     }
     // check if email exist
@@ -69,22 +68,53 @@ exports.login = function (req, res) {
                     access_token: token,
                     ip_address: ip.address()
                 }
-                var query = "INSERT INTO ?? SET ?";
-                var table = ["access_token"];
 
+                var query = "SELECT * FROM ?? WHERE ??=?";
+                var table = ["access_token", "user_id", data.user_id];
                 query = mysql.format(query, table);
-                conn.query(query, data, function (error, rows) {
+                conn.query(query, function (error, rows){
                     if (error) {
                         console.log(error);
                     } else {
-                         res.json({
-                             success: true,
-                             message: 'Login Success. Token generated.',
-                             token: token,
-                             currentUser: data.user_id
-                         });
+                        if (rows.length == 0){
+                            var query = "INSERT INTO ?? SET ?";
+                            var table = ["access_token"];
+            
+                            query = mysql.format(query, table);
+                            conn.query(query, data, function (error, rows) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                     res.json({
+                                         success: true,
+                                         message: 'Login Success. Token generated.',
+                                         token: token,
+                                         currentUser: data.user_id
+                                     });
+                                }
+                            });
+                        }
+                        if (rows.length == 1) {
+                            var query = "UPDATE ?? SET ??=?, ??=? WHERE ??=?";
+                            var table = ["access_token", "access_token", token, "ip_address", data.ip_address, "user_id", data.user_id];
+            
+                            query = mysql.format(query, table);
+                            conn.query(query, function (error, rows) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                     res.json({
+                                         success: true,
+                                         message: 'Login Success. Token generated.',
+                                         token: token,
+                                         currentUser: data.user_id
+                                     });
+                                }
+                            });
+                        }
                     }
                 });
+
             } else {
                  res.json({
                      "Error": true,
@@ -95,3 +125,6 @@ exports.login = function (req, res) {
     })
 }
 
+exports.testpage = function (req, res) {
+    response.ok("Exclusive to role 1", res);
+}
