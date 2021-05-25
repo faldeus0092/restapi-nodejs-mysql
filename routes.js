@@ -1,4 +1,4 @@
-// navigasi
+// // navigasi
 // 'use strict';
 
 // module.exports = function(app){

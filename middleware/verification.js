@@ -40,7 +40,7 @@ function verification(roles) {
                     } else {
                         return rest.status(401).send({
                             auth: false,
-                            message: "Tokenmu wes bosok"
+                            message: "Tokenmu invalid"
                         });
                     }
                 }

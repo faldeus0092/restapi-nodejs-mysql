@@ -4,7 +4,7 @@ var response = require('./res');
 var connection = require('./conn');
 
 exports.index = function (req, res) {
-    response.ok('Application Running!', res);
+    response.ok('Application Running! Please either login or register to get token for accessing this API. Read documentation at https://documenter.getpostman.com/view/15174748/TzXumeyp', res);
 }
 
 // show all employee
