@@ -16,5 +16,5 @@ app.use(morgan('dev'));
 app.use('/auth', require('./middleware'));
 
 app.listen(PORT, () => {
-    console.log(`Server started on port`, process.env.DATABASE_URL);
+    console.log(`Server started on port`, PORT);
 });
