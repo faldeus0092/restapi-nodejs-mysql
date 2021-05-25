@@ -9,7 +9,7 @@ const conn = mysql.createPool({
     database:'heroku_a64de6f5af87faa'
 });
 
-conn.connect((err) =>{
+conn.getConnection((err) =>{
     if(err) throw err;
     console.log('MySQL Connected');
 })
