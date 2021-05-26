@@ -20,9 +20,9 @@ const conn = mysql.createPool({
 //     database:'restapidb'
 // });
 
-conn.getConnection((err) =>{
-    if(err) throw err;
-    console.log('MySQL Connected');
-})
+// conn.getConnection((err) =>{
+//     if(err) throw err;
+//     console.log('MySQL Connected');
+// })
 
 module.exports = conn;

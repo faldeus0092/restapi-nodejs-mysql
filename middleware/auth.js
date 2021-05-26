@@ -55,6 +55,7 @@ exports.login = function (req, res) {
     query = mysql.format(query, table);
     conn.getConnection(function (err, conn) {
         conn.query(query, function (error, rows) {
+            conn.release();
             if(error){
                 console.log(error);
             } else {
@@ -124,7 +125,7 @@ exports.login = function (req, res) {
                 }
             }
         })
-        conn.release();
+        
     })
 }
 
