@@ -53,7 +53,7 @@ exports.login = function (req, res) {
     var query = "SELECT * FROM ?? WHERE ??=? AND ??=?";
     var table = ["user", "password", md5(post.password), "email", post.email];
     query = mysql.format(query, table);
-    pool.getConnection(function (err, conn) {
+    conn.getConnection(function (err, conn) {
         conn.query(query, function (error, rows) {
             if(error){
                 console.log(error);
