@@ -1,4 +1,4 @@
-var conn = require('../conn');
+var getConnection = require('../conn');
 var mysql = require('mysql');
 var md5 = require('md5');
 var response = require('../res');
@@ -53,7 +53,7 @@ exports.login = function (req, res) {
     var query = "SELECT * FROM ?? WHERE ??=? AND ??=?";
     var table = ["user", "password", md5(post.password), "email", post.email];
     query = mysql.format(query, table);
-    conn.getConnection(function (err, conn) {
+    getConnection(function (err, conn) {
         if (err) {
             console.log(err);
             return;
@@ -79,7 +79,7 @@ exports.login = function (req, res) {
                     var query = "SELECT * FROM ?? WHERE ??=?";
                     var table = ["access_token", "user_id", data.user_id];
                     query = mysql.format(query, table);
-                    conn.getConnection(function (err, conn) {
+                    getConnection(function (err, conn) {
                         if (err) {
                             console.log(err);
                             return;
@@ -95,7 +95,7 @@ exports.login = function (req, res) {
                                     var table = ["access_token"];
                                     
                                     query = mysql.format(query, table);
-                                    conn.getConnection(function (err, conn) {
+                                    getConnection(function (err, conn) {
                                         if (err) {
                                             console.log(err);
                                             return;
@@ -120,7 +120,7 @@ exports.login = function (req, res) {
                                     var table = ["access_token", "access_token", token, "ip_address", data.ip_address, "user_id", data.user_id];
                     
                                     query = mysql.format(query, table);
-                                    conn.getConnection(function (err, conn) {
+                                    getConnection(function (err, conn) {
                                         if (err) {
                                             console.log(err);
                                             return;
