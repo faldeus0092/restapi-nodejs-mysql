@@ -127,7 +127,3 @@ exports.login = function (req, res) {
         }
     })
 }
-
-// exports.testpage = function (req, res) {
-//     response.ok("Exclusive to role 1", res);
-// }
