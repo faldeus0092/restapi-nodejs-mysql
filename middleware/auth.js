@@ -104,6 +104,7 @@ exports.login = function (req, res) {
                                             conn.release();
                                             if (error) {
                                                 console.log(error);
+                                                return;
                                             } else {
                                                  return res.json({
                                                      success: true,
@@ -129,6 +130,7 @@ exports.login = function (req, res) {
                                             conn.release();
                                             if (error) {
                                                 console.log(error);
+                                                return;
                                             } else {
                                                  return res.json({
                                                      success: true,
