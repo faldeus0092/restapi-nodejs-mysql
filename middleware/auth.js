@@ -1,4 +1,4 @@
-var getConnection = require('../conn');
+var conn = require('../conn');
 var mysql = require('mysql');
 var md5 = require('md5');
 var response = require('../res');
@@ -53,109 +53,78 @@ exports.login = function (req, res) {
     var query = "SELECT * FROM ?? WHERE ??=? AND ??=?";
     var table = ["user", "password", md5(post.password), "email", post.email];
     query = mysql.format(query, table);
-    getConnection(function (err, conn) {
-        if (err) {
-            console.log(err);
+    conn.query(query, function (error, rows) {
+        if(error){
+            console.log(error);
             return;
-        }
-        conn.query(query, function (error, rows) {
-            conn.release();
-            if(error){
-                console.log(error);
-                return;
-            } else {
-                // if exists
-                if (rows.length == 1) {
-                    var token = jwt.sign({rows}, config.secret, {
-                        expiresIn: 86400 // expires in 1 day
-                    });
-                    user_id = rows[0].user_id;
-                    var data = {
-                        user_id: user_id,
-                        access_token: token,
-                        ip_address: ip.address()
-                    }
-    
-                    var query = "SELECT * FROM ?? WHERE ??=?";
-                    var table = ["access_token", "user_id", data.user_id];
-                    query = mysql.format(query, table);
-                    getConnection(function (err, conn) {
-                        if (err) {
-                            console.log(err);
-                            return;
-                        }
-                        conn.query(query, function (error, rows){
-                            conn.release();
-                            if (error) {
-                                console.log(error);
-                                return;
-                            } else {
-                                if (rows.length == 0){
-                                    var query = "INSERT INTO ?? SET ?";
-                                    var table = ["access_token"];
-                                    
-                                    query = mysql.format(query, table);
-                                    getConnection(function (err, conn) {
-                                        if (err) {
-                                            console.log(err);
-                                            return;
-                                        }
-                                        conn.query(query, data, function (error, rows) {
-                                            conn.release();
-                                            if (error) {
-                                                console.log(error);
-                                                return;
-                                            } else {
-                                                 return res.json({
-                                                     success: true,
-                                                     message: 'Login Success. Token generated.',
-                                                     token: token,
-                                                     currentUser: data.user_id
-                                                 });
-                                            }
-                                        });
-                                    });
-                                }
-                                if (rows.length == 1) {
-                                    var query = "UPDATE ?? SET ??=?, ??=? WHERE ??=?";
-                                    var table = ["access_token", "access_token", token, "ip_address", data.ip_address, "user_id", data.user_id];
-                    
-                                    query = mysql.format(query, table);
-                                    getConnection(function (err, conn) {
-                                        if (err) {
-                                            console.log(err);
-                                            return;
-                                        }
-                                        conn.query(query, function (error, rows) {
-                                            conn.release();
-                                            if (error) {
-                                                console.log(error);
-                                                return;
-                                            } else {
-                                                 return res.json({
-                                                     success: true,
-                                                     message: 'Login Success. Token generated.',
-                                                     token: token,
-                                                     currentUser: data.user_id
-                                                 });
-                                            }
-                                        });
-                                    });
-                                }
-                            }
-                        });
-
-                    });
-    
-                } else {
-                     return res.json({
-                         "Error": true,
-                         "Message": "Wrong credentials."
-                     });
+        } else {
+            // if exists
+            if (rows.length == 1) {
+                var token = jwt.sign({rows}, config.secret, {
+                    expiresIn: 86400 // expires in 1 day
+                });
+                user_id = rows[0].user_id;
+                var data = {
+                    user_id: user_id,
+                    access_token: token,
+                    ip_address: ip.address()
                 }
+
+                var query = "SELECT * FROM ?? WHERE ??=?";
+                var table = ["access_token", "user_id", data.user_id];
+                query = mysql.format(query, table);
+                conn.query(query, function (error, rows){
+                    if (error) {
+                        console.log(error);
+                        return;
+                    } else {
+                        if (rows.length == 0){
+                            var query = "INSERT INTO ?? SET ?";
+                            var table = ["access_token"];
+            
+                            query = mysql.format(query, table);
+                            conn.query(query, data, function (error, rows) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    return res.json({
+                                         success: true,
+                                         message: 'Login Success. Token generated.',
+                                         token: token,
+                                         currentUser: data.user_id
+                                     });
+                                }
+                            });
+                        }
+                        if (rows.length == 1) {
+                            var query = "UPDATE ?? SET ??=?, ??=? WHERE ??=?";
+                            var table = ["access_token", "access_token", token, "ip_address", data.ip_address, "user_id", data.user_id];
+            
+                            query = mysql.format(query, table);
+                            conn.query(query, function (error, rows) {
+                                if (error) {
+                                    console.log(error);
+                                    return;
+                                } else {
+                                    return res.json({
+                                         success: true,
+                                         message: 'Login Success. Token generated.',
+                                         token: token,
+                                         currentUser: data.user_id
+                                     });
+                                }
+                            });
+                        }
+                    }
+                });
+
+            } else {
+                return res.json({
+                     "Error": true,
+                     "Message": "Wrong credentials."
+                 });
             }
-        })
-        
+        }
     })
 }
 
